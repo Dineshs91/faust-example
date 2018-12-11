@@ -1,0 +1,29 @@
+version: '3.3'
+
+services:
+  app:
+    build:
+      dockerfile: ./docker/app/Dockerfile
+      context: .
+    ports:
+      - '8020:8020'
+    depends_on:
+      - kafka
+    tmpfs:
+      - /tmp
+    volumes:
+      - .:/app/code
+
+  faust-worker1:
+    build:
+      dockerfile: ./docker/app/Dockerfile
+      context: .
+    entrypoint: ./docker/worker/entrypoint.sh
+
+  kafka:
+    image: spotify/kafka
+    ports:
+      - '9092:9092'
+    environment:
+      - ADVERTISHED_HOST=kafka
+      - ADVERTISED_PORT=9092
