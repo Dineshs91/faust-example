@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'polls'
 ]
 
 MIDDLEWARE = [
@@ -118,5 +119,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
-FAUST_BROKER_URL = "kafka://kafka:9290"
+FAUST_BROKER_URL = "kafka://kafka:9092"
 FAUST_STORE_URL = "rocksdb://"
