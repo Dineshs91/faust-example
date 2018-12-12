@@ -18,6 +18,8 @@ services:
     build:
       dockerfile: ./docker/app/Dockerfile
       context: .
+    ports:
+      - '6066:6066'
     entrypoint: ./docker/worker/entrypoint.sh
 
   kafka:
@@ -25,5 +27,5 @@ services:
     ports:
       - '9092:9092'
     environment:
-      - ADVERTISHED_HOST=kafka
+      - ADVERTISED_HOST=kafka
       - ADVERTISED_PORT=9092
