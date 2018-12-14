@@ -119,5 +119,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
-FAUST_BROKER_URL = "kafka://kafka:9092"
+KAFKA_HOST = os.environ.get("KAFKA_HOST")
+FAUST_BROKER_URL = "kafka://{}:9092".format(KAFKA_HOST)
 FAUST_STORE_URL = "rocksdb://"

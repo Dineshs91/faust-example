@@ -5,6 +5,7 @@ services:
     build:
       dockerfile: ./docker/app/Dockerfile
       context: .
+    entrypoint: ./docker/app/entrypoint.sh
     ports:
       - '8020:8020'
     depends_on:
@@ -20,12 +21,24 @@ services:
       context: .
     ports:
       - '6066:6066'
+    depends_on:
+      - kafka
+    environment:
+      KAFKA_HOST: kafka
     entrypoint: ./docker/worker/entrypoint.sh
 
-  kafka:
-    image: spotify/kafka
+  zookeeper:
+    image: wurstmeister/zookeeper
     ports:
-      - '9092:9092'
+    - "2181:2181"
+
+  kafka:
+    image: wurstmeister/kafka
+    ports:
+      - "9092:9092"
     environment:
-      - ADVERTISED_HOST=kafka
-      - ADVERTISED_PORT=9092
+      KAFKA_LISTENERS: PLAINTEXT://:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock

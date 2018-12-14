@@ -21,4 +21,3 @@ RUN mkdir -p /app/code
 COPY . /app/code
 
 WORKDIR /app/code
-ENTRYPOINT /app/code/docker/app/entrypoint.sh
